@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import Map from './components/Map';
+import styles from './App.module.css';
 
 class App extends Component {
-  render() {
+
+    render() 
+    {
+        return (<div className={styles.mapContainer}><Map accessToken="pk.eyJ1Ijoiam9uYXRoYW5jbGFyZSIsImEiOiJjanBjczd0cmwwYjM4M3BudjV2M3lvdHZ5In0.TerFDj6LBma-HNs0Np0Wtg" className={styles.mapContainer} /></div>);
+    }
+  /*render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -22,7 +28,8 @@ class App extends Component {
         </header>
       </div>
     );
-  }
+  }*/
+
 }
 
 export default App;
