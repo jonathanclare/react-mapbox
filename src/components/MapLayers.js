@@ -80,11 +80,11 @@ export default class MapLayers extends React.Component
         switch(layer.type)
         {
             case 'background':
-                return <rect width="20" height="20" style={layerStyle} />;
+                return <rect width={w} height={h} style={layerStyle} />;
             case 'fill':
-                return <rect width="20" height="20" style={layerStyle} />;
+                return <rect width={w} height={h} style={layerStyle} />;
             case 'line':
-                return <line x1="0" y1="10" x2="20" y2="10" style={layerStyle} />;
+                return <line x1="0" y1={h/2} x2={w} y2={h/2} style={layerStyle} />;
             default:
                 return null;
         }
@@ -101,9 +101,7 @@ export default class MapLayers extends React.Component
             layerList = layers.map(layer => 
             {
                 const layerName = (layer.name ? layer.name : layer.id);
-                const w = 20, h = 20;
-                const layerSymbol = (<svg width="20" height="20">{this.getLayerShape(layer)}</svg>);
-
+                const w = 20, h = 20, layerSymbol = (<svg width={w} height={h}>{this.getLayerShape(layer, w, h)}</svg>);
                 return (
                     <ListItem button key={layer.id} onClick={evt => {this.handleLayerClick(layer)}}>
                         <ListItemIcon>{layerSymbol}</ListItemIcon>
