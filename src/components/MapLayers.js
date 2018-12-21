@@ -73,21 +73,26 @@ export default class MapLayers extends React.Component
         }
     }
 
-    getLayerShape(layer, w, h)
+    getLayerSymbol(layer, w, h)
     { 
         // background, fill, line, symbol, raster, circle, fill-extrusion, heatmap, hillshade.
-        const layerStyle = this.getLayerStyle(layer)
+        const layerStyle = this.getLayerStyle(layer);
+        let shape;
         switch(layer.type)
         {
             case 'background':
-                return <rect width={w} height={h} style={layerStyle} />;
+                shape = <rect width={w} height={h} style={layerStyle} />;
+                break;
             case 'fill':
-                return <rect width={w} height={h} style={layerStyle} />;
+                shape = <rect width={w} height={h} style={layerStyle} />;
+                break;
             case 'line':
-                return <line x1="0" y1={h/2} x2={w} y2={h/2} style={layerStyle} />;
+                shape = <line x1="0" y1={h/2} x2={w} y2={h/2} style={layerStyle} />;
+                break;
             default:
-                return null;
+                shape = null;
         }
+        return (<svg width={w} height={h}>{shape}</svg>)
     }
 
     render() 
@@ -101,7 +106,7 @@ export default class MapLayers extends React.Component
             layerList = layers.map(layer => 
             {
                 const layerName = (layer.name ? layer.name : layer.id);
-                const w = 20, h = 20, layerSymbol = (<svg width={w} height={h}>{this.getLayerShape(layer, w, h)}</svg>);
+                const w = 20, h = 20, layerSymbol = this.getLayerSymbol(layer, w, h);
                 return (
                     <ListItem button key={layer.id} onClick={evt => {this.handleLayerClick(layer)}}>
                         <ListItemIcon>{layerSymbol}</ListItemIcon>
