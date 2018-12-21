@@ -54,6 +54,42 @@ export default class MapLayers extends React.Component
         console.log(layer)
     }
 
+    getLayerStyle(layer)
+    { 
+        switch(layer.type)
+        {
+            case 'background':
+                return {fill:layer.paint['background-color']};
+            case 'fill':
+                return {fill:layer.paint['fill-color'], 
+                    fillOpacity:layer.paint['fill-opacity']};
+            case 'line':
+                return {stroke:layer.paint['line-color'], 
+                    strokeWidth:layer.paint['line-width'], 
+                    strokeOpacity:layer.paint['line-opacity'], 
+                    strokeDasharray:layer.paint['line-dasharray']};
+            default:
+                return {};
+        }
+    }
+
+    getLayerShape(layer, w, h)
+    { 
+        // background, fill, line, symbol, raster, circle, fill-extrusion, heatmap, hillshade.
+        const layerStyle = this.getLayerStyle(layer)
+        switch(layer.type)
+        {
+            case 'background':
+                return <rect width="20" height="20" style={layerStyle} />;
+            case 'fill':
+                return <rect width="20" height="20" style={layerStyle} />;
+            case 'line':
+                return <line x1="0" y1="10" x2="20" y2="10" style={layerStyle} />;
+            default:
+                return null;
+        }
+    }
+
     render() 
     {
         console.log(this.state.style)
@@ -65,31 +101,8 @@ export default class MapLayers extends React.Component
             layerList = layers.map(layer => 
             {
                 const layerName = (layer.name ? layer.name : layer.id);
-
-                let layerShape; // background, fill, line, symbol, raster, circle, fill-extrusion, heatmap, hillshade.
-                switch(layer.type)
-                {
-                    case 'background':
-                        layerShape = <rect width="20" height="20" 
-                                        style={{fill:layer.paint['background-color']}} />;
-                        break;
-                    case 'fill':
-                        layerShape = <rect width="20" height="20" 
-                                        style={{fill:layer.paint['fill-color'], 
-                                        fillOpacity:layer.paint['fill-opacity']}} />;
-                        break;
-                    case 'line':
-                        layerShape = <line x1="0" y1="10" x2="20" y2="10" 
-                                        style={{stroke:layer.paint['line-color'], 
-                                        //strokeWidth:layer.paint['line-width'], 
-                                        strokeWidth:3, 
-                                        strokeOpacity:layer.paint['line-opacity'], 
-                                        strokeDasharray:layer.paint['line-dasharray']}} />;
-                        break;
-                    default:
-                        layerShape = null;
-                }
-                const layerSymbol = (<svg width="20" height="20">{layerShape}</svg>);
+                const w = 20, h = 20;
+                const layerSymbol = (<svg width="20" height="20">{this.getLayerShape(layer)}</svg>);
 
                 return (
                     <ListItem button key={layer.id} onClick={evt => {this.handleLayerClick(layer)}}>
