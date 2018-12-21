@@ -7,6 +7,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Brush from '@material-ui/icons/Brush';
+import {getLayerStyle, getLayerSymbol} from '../utils/MapboxToSvg';
 
 export default class MapLayers extends React.Component 
 {
@@ -54,47 +55,6 @@ export default class MapLayers extends React.Component
         console.log(layer)
     }
 
-    getLayerStyle(layer)
-    { 
-        switch(layer.type)
-        {
-            case 'background':
-                return {fill:layer.paint['background-color']};
-            case 'fill':
-                return {fill:layer.paint['fill-color'], 
-                    fillOpacity:layer.paint['fill-opacity']};
-            case 'line':
-                return {stroke:layer.paint['line-color'], 
-                    strokeWidth:layer.paint['line-width'], 
-                    strokeOpacity:layer.paint['line-opacity'], 
-                    strokeDasharray:layer.paint['line-dasharray']};
-            default:
-                return {};
-        }
-    }
-
-    getLayerSymbol(layer, w, h)
-    { 
-        // background, fill, line, symbol, raster, circle, fill-extrusion, heatmap, hillshade.
-        const layerStyle = this.getLayerStyle(layer);
-        let shape;
-        switch(layer.type)
-        {
-            case 'background':
-                shape = <rect width={w} height={h} style={layerStyle} />;
-                break;
-            case 'fill':
-                shape = <rect width={w} height={h} style={layerStyle} />;
-                break;
-            case 'line':
-                shape = <line x1="0" y1={h/2} x2={w} y2={h/2} style={layerStyle} />;
-                break;
-            default:
-                shape = null;
-        }
-        return (<svg width={w} height={h}>{shape}</svg>)
-    }
-
     render() 
     {
         console.log(this.state.style)
@@ -106,7 +66,7 @@ export default class MapLayers extends React.Component
             layerList = layers.map(layer => 
             {
                 const layerName = (layer.name ? layer.name : layer.id);
-                const w = 20, h = 20, layerSymbol = this.getLayerSymbol(layer, w, h);
+                const layerSymbol = getLayerSymbol(layer, 20, 20);
                 return (
                     <ListItem button key={layer.id} onClick={evt => {this.handleLayerClick(layer)}}>
                         <ListItemIcon>{layerSymbol}</ListItemIcon>
