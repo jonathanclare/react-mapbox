@@ -21,6 +21,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Map from '../components/Map';
 import MapStyle from '../components/MapStyle';
+import MapLayers from '../components/MapLayers';
 
 const drawerWidth = 240;
 
@@ -205,6 +206,8 @@ class Layout extends React.Component
                                 </List>
                                 <Divider />
                                 <MapStyle map={map} styleId="basic"></MapStyle>
+                                <Divider />
+                                <MapLayers map={map} ></MapLayers>
                                 <Divider />
                             </React.Fragment>
                         )}

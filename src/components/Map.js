@@ -1,5 +1,5 @@
 import React, {Component}  from 'react';
-import mapboxgl from 'mapbox-gl'
+import mapboxgl from 'mapbox-gl';
 import styles from './Map.module.css';
 
 export default class Map extends Component

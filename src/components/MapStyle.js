@@ -18,42 +18,32 @@ export default class MapStyle extends React.Component
         {
             open: false,
             styleId: props.styleId,
-            version: props.version, 
         };
     }
 
     componentDidUpdate(prevProps, prevState) 
     {
-        const newState = {};
-        if (prevProps.styleId !== this.props.styleId || prevState.styleId !== this.state.styleId) newState.styleId = this.props.styleId;
-        if (prevProps.version !== this.props.version || prevState.version !== this.state.version) newState.version = this.props.version;
-        if (Object.keys(newState).length !== 0) this.updateMapStyle();
-    }
-    
-    updateMapStyle()
-    {
-        this.props.map.setStyle(`mapbox://styles/mapbox/${this.state.styleId}-${this.state.version}`);
+        if (prevProps.styleId !== this.props.styleId) this.setState({styleId:this.props.styleId});
     }
     
     handleCollapse = () => 
     {
-        this.setState(state => ({open: !state.open}));
+        this.setState(prevState => ({open: !prevState.open}));
     }
 
-    handleStyleChange = id => 
+    handleStyleChange = styleId => 
     {
-        this.setState({styleId: id});
+        this.setState({styleId: styleId}, () => this.props.map.setStyle(`mapbox://styles/${this.props.owner}/${this.state.styleId}-${this.props.version}`));
     }
 
     render() 
     {
-        const layerList = this.props.layerIds.map(id => 
+        const layerList = this.props.styles.map(styleId => 
         {
-            const isSelected = (id === this.state.styleId);
+            const isSelected = (styleId === this.state.styleId);
             return (
-                <ListItem button key={id} onClick={evt => {this.handleStyleChange(id)}}>
-                    <ListItemText primary={id} />
-                    {isSelected && (<ListItemIcon><CheckCircle color="secondary" /></ListItemIcon>)}
+                <ListItem button key={styleId} onClick={evt => {this.handleStyleChange(styleId)}}>
+                    <ListItemText primary={styleId} />{isSelected && (<ListItemIcon><CheckCircle color="secondary" /></ListItemIcon>)}
                 </ListItem>
             );
         });
@@ -74,7 +64,8 @@ export default class MapStyle extends React.Component
 
 MapStyle.defaultProps = 
 {
-    layerIds: ['basic', 'streets', 'bright', 'light', 'dark', 'satellite'],
+    styles: ['basic', 'streets', 'bright', 'light', 'dark', 'satellite'],
+    owner: 'mapbox',
     styleId: 'basic',
     version: 'v9',
 };
