@@ -66,7 +66,7 @@ export default class MapLayers extends React.Component
             {
                 const layerName = (layer.name ? layer.name : layer.id);
 
-                let layerShape;
+                let layerShape; // background, fill, line, symbol, raster, circle, fill-extrusion, heatmap, hillshade.
                 switch(layer.type)
                 {
                     case 'background':
@@ -79,9 +79,10 @@ export default class MapLayers extends React.Component
                                         fillOpacity:layer.paint['fill-opacity']}} />;
                         break;
                     case 'line':
-                        layerShape = <line x1="0" y1="0" x2="20" y2="0" 
+                        layerShape = <line x1="0" y1="10" x2="20" y2="10" 
                                         style={{stroke:layer.paint['line-color'], 
-                                        strokeWidth:layer.paint['line-width'], 
+                                        //strokeWidth:layer.paint['line-width'], 
+                                        strokeWidth:3, 
                                         strokeOpacity:layer.paint['line-opacity'], 
                                         strokeDasharray:layer.paint['line-dasharray']}} />;
                         break;

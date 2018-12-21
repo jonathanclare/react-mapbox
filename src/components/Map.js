@@ -25,7 +25,7 @@ export default class Map extends Component
         const map = new mapboxgl.Map(
         {
             container: this.mapContainer,
-            style: 'mapbox://styles/mapbox/basic-v9',
+            style: 'mapbox://styles/mapbox/streets-v9',
             center: [this.state.lng, this.state.lat],
             zoom: this.state.zoom
         });

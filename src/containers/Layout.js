@@ -205,7 +205,7 @@ class Layout extends React.Component
                                     ))}
                                 </List>
                                 <Divider />
-                                <MapStyle map={map} styleId="basic"></MapStyle>
+                                <MapStyle map={map} styleId="streets"></MapStyle>
                                 <Divider />
                                 <MapLayers map={map} ></MapLayers>
                                 <Divider />
