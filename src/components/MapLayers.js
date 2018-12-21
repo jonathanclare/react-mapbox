@@ -7,7 +7,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Brush from '@material-ui/icons/Brush';
-import {getLayerStyle, getLayerSymbol} from '../utils/MapboxToSvg';
+import {getLayerSymbol} from '../utils/MapboxStyleToSvg';
 
 export default class MapLayers extends React.Component 
 {
