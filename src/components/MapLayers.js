@@ -57,7 +57,6 @@ export default class MapLayers extends React.Component
 
     render() 
     {
-        console.log(this.state.style)
         const {version, name, metadata, sources, layers} = this.state.style;
 
         let layerList = [];
