@@ -126,9 +126,6 @@ class Layout extends React.Component
             },
         });
     }
-
-    // Add a comment
-    // Add another comment
     
     componentDidMount()
     {
